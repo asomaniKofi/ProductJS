@@ -12,15 +12,21 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const uri = "mongodb+srv://dbAdmin:Jaceaaron9606@locations.8w0yr.mongodb.net/ColletionItems?retryWrites=true&w=majority";
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
-  service:"gmail",
+  host: 'smtp.gmail.com',
+  secure: true,
+  port: 465,
   auth:{
-      user:"negativenegro@gmail.com",
-      pass:"faggart26"
+      user:'brooklynkidNYB@gmail.com',
+      pass:'yk2015kl'
+  },
+  tls: {
+    // do not fail on invalid certs
+    rejectUnauthorized: false,
   }
 });
 let mailOptions = {
-        from :"negativenegro@gmail.com",
-        to:"brooklynkidNYB@gmail.com",
+        from :"brooklynkidNYB@gmail.com",
+        to:"donotreplytrashscanner@gmail.com",
         subject:"Error Logging",
         text:""
 };
@@ -65,9 +71,16 @@ app.route("/api/product").post(function(req,res){
               });
               res.send(`${err.message}`)
             }else{
-                res.send("Product Added No Hassle")
+              res.send("Product Added No Hassle")
             }
         });
+    }else{
+      mailOptions.text = `Error with request: Body is incorrect format`;
+      transporter.sendMail(mailOptions,function(error,info){
+        if(error){
+            console.log(error);
+        }
+      });
     }
 });
 
