@@ -7,17 +7,19 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose");
 const Product = require('./Model/Product');
+const dotenv = require('dotenv');
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const uri = "mongodb+srv://dbAdmin:Jaceaaron9606@locations.8w0yr.mongodb.net/ColletionItems?retryWrites=true&w=majority";
 const nodemailer = require("nodemailer");
+dotenv.config();
+const uri = `mongodb+srv://dbAdmin:${process.env.MONGODB}@locations.8w0yr.mongodb.net/ColletionItems?retryWrites=true&w=majority`;
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   secure: true,
   port: 465,
   auth:{
       user:'brooklynkidNYB@gmail.com',
-      pass:'yk2015kl'
+      pass: process.env.GMAIL
   },
   tls: {
     // do not fail on invalid certs
